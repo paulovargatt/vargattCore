@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
+    protected $limit = 3;
+
     public function index(){
 
-        $posts = Post::all();
+        $posts = Post::with('author')
+            ->latest()
+            ->Paginate($this->limit);
+
+        
         return view('blog.index',compact('posts'));
     }
 }
