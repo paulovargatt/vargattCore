@@ -30,7 +30,7 @@ class CategoriesTableSeeder extends Seeder
         ]);
 
         for ($i = 1; $i <= 10; $i ++ ){
-            $category_id = rand(1,5);
+            $category_id = rand(1,3);
             DB::table('posts')
                 ->where('id', $i)
                 ->update(['category_id' => $category_id]);

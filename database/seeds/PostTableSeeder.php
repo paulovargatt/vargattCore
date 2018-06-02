@@ -17,7 +17,7 @@ class PostTableSeeder extends Seeder
         //Generate
     $posts = [];
     $faker = Faker\Factory::create();
-    $date = Carbon::create(2018,06,01,18,30,00);
+    $date = Carbon::create(2018,05,20,18,30,00);
 
         for ($i = 1; $i <= 10; $i ++)
         {

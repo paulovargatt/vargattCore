@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Post;
-use function foo\func;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 

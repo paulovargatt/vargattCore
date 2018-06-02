@@ -4,7 +4,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            @foreach($posts as $post)
+
+            @if(isset($categoryName))
+                <div class="alert alert-info">
+                    <p>Categoria {{$categoryName}}</p>
+                </div>
+            @endif
+
+            @forelse($posts as $post)
             <article class="post-item">
                 @if($post->image_url)
                 <div class="post-item-image">
@@ -24,7 +31,7 @@
                             <ul class="post-meta-group">
                                 <li><i class="fa fa-user"></i><a href="#">{{$post->author->name}}</a></li>
                                 <li><i class="fa fa-clock-o"></i><time> {{$post->date}}</time></li>
-                                <li><i class="fa fa-tags"></i><a href="#"> Blog</a></li>
+                                <li><i class="fa fa-folder"></i><a href="{{route('blog.category', $post->category->title)}}"> {{$post->category->title}}</a></li>
                                 <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
                             </ul>
                         </div>
@@ -34,7 +41,11 @@
                     </div>
                 </div>
             </article>
-            @endforeach
+                @empty
+                    <div class="alert alert-info">
+                        <p>Sem Posts no momento...</p>
+                    </div>
+            @endforelse
 
 
             <nav>
