@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -18,17 +19,24 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+
     protected $hidden = [
         'password', 'remember_token',
     ];
 
+    public function gravatar(){
+        $email = $this->email;
+        $default = "https://image.flaticon.com/icons/svg/149/149071.svg";
+        $size = 110;
+        return $default;//"https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+    }
 
     public function posts(){
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class,'author_id');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

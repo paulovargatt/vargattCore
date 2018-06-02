@@ -34,7 +34,8 @@ class PostTableSeeder extends Seeder
                 'image' => rand(0,1) == 1 ? $image : null,
                 'created_at' => $createdDate,
                 'updated_at' => $createdDate,
-                'published_at' => $i < 5 ? $publishedDate : (rand(0,1) == 0 ? null : $publishedDate->addDays(4))
+                'published_at' => $i < 5 ? $publishedDate : (rand(0,1) == 0 ? null : $publishedDate->addDays(4)),
+                'view_count' => rand(1,10)*5
             ];
         }
         DB::table('posts')->insert($posts);
