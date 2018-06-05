@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 
 class BlogController extends BackendController
 {
+
+    protected $limit = 7;
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +17,9 @@ class BlogController extends BackendController
      */
     public function index()
     {
-        $posts = Post::all();
-
+        $posts = Post::with('category','author')
+            ->latest()
+            ->paginate($this->limit);
       return view('layouts.backend.blog.index',compact('posts'));
     }
 

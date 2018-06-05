@@ -65,4 +65,21 @@ class Post extends Model
 
     }
 
+    public function dateFormated($showTimes = false){
+        $format = "d/m/Y";
+        if($showTimes) $format = $format . " H:i";
+        return $this->created_at->format($format);
+    }
+
+    public function publicationLabel(){
+        if( !$this->published_at){
+            return '<span class="label label-warning">Esboço</span>';
+        }
+        elseif ($this->published_at && $this->published_at->isFuture()){
+            return '<span class="label label-info">Agendado</span>';
+        }else{
+            return '<span class="label label-success">Publicado</span>';
+        }
+    }
+
 }

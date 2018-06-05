@@ -5,7 +5,8 @@
         <section class="content-header">
             <h1>Posts</h1>
             <ol class="breadcrumb">
-                <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
+                <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li class="active"><a href="{{route('blog.index')}}"><i class="fa fa-bookmark-o"></i> Posts</a></li>
             </ol>
         </section>
 
@@ -18,6 +19,7 @@
                             <table class="table table-active">
                                 <thead>
                                 <tr>
+                                    <td></td>
                                     <td>Titulo</td>
                                     <td>Autor</td>
                                     <td>Categoria</td>
@@ -29,6 +31,12 @@
                                 <tbody>
                                 @foreach($posts as $post)
                                     <tr>
+                                        <td width="150">
+                                            <span title="{{$post->dateFormated(true)}}"> {{$post->dateFormated(true)}}
+                                            <br>
+                                                {!!  $post->publicationLabel()!!}
+                                            </span>
+                                        </td>
                                         <td>{{$post->title}}</td>
                                         <td>{{$post->author->name}}</td>
                                         <td>{{$post->category->title}}</td>
@@ -49,16 +57,11 @@
 
                         <div class="box-footer clearfix">
                             <div class="pull-left">
-                                <ul class="pagination no-margin">
-                                    <li><a href=""></a> </li>
-                                    <li><a href=""></a></li>
-                                    <li><a href=""></a></li>
-                                    <li><a href=""></a></li>
-                                    <li><a href=""></a></li>
-                                </ul>
+                               {{$posts->links()}}
                             </div>
                             <div class="pull-right">
-                                <small>4 Items</small>
+                                <?php $postCount = $posts->count() ?>
+                                <small>{{$postCount}} {{str_plural('Item',$postCount)}}</small>
                             </div>
                         </div>
 
