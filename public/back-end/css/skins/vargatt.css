@@ -1,0 +1,26 @@
+.skin-black .main-header .navbar{
+    background-color: #222d32;
+}
+
+.skin-black .main-header>.logo {
+    background-color: #191616;
+    color: #fff;
+}
+
+.skin-black .main-header>.logo:hover {
+    background-color: #060a19;
+    color: #fff;
+}
+
+.dropdown-toggle{
+    color: #fff!important;
+}
+
+.navbar-custom-menu:hover{
+    background: black!important;
+}
+
+.skin-black .main-header .navbar .nav>li>a:hover, .skin-black .main-header .navbar .nav>li>a:active, .skin-black .main-header .navbar .nav>li>a:focus, .skin-black .main-header .navbar .nav .open>a, .skin-black .main-header .navbar .nav .open>a:hover, .skin-black .main-header .navbar .nav .open>a:focus, .skin-black .main-header .navbar .nav>.active>a{
+    background: black!important;
+
+}

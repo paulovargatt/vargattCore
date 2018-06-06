@@ -15,7 +15,19 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
+                        <div class="box-header">
+                            <div class="pull-left">
+                                <a href="{{route('blog.create')}}" class="btn btn-primary">
+                                    Novo Post
+                                </a>
+                            </div>
+                        </div>
                         <div class="box-body">
+                            @if(!$posts->count())
+                            <div class="alert alert-danger">
+                                Sem dados no momento
+                            </div>
+                            @endif
                             <table class="table table-active">
                                 <thead>
                                 <tr>
@@ -33,7 +45,7 @@
                                     <tr>
                                         <td width="150">
                                             <span title="{{$post->dateFormated(true)}}"> {{$post->dateFormated(true)}}
-                                            <br>
+                                                <br>
                                                 {!!  $post->publicationLabel()!!}
                                             </span>
                                         </td>
@@ -57,10 +69,9 @@
 
                         <div class="box-footer clearfix">
                             <div class="pull-left">
-                               {{$posts->links()}}
+                                {{$posts->links()}}
                             </div>
                             <div class="pull-right">
-                                <?php $postCount = $posts->count() ?>
                                 <small>{{$postCount}} {{str_plural('Item',$postCount)}}</small>
                             </div>
                         </div>
@@ -70,4 +81,10 @@
             </div>
         </section>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        $('ul.pagination').addClass('no-margin pagination-sm')
+    </script>
 @endsection
