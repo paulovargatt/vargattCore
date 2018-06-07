@@ -14,11 +14,11 @@
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-xs-12 col-md-8">
                     <div class="box">
                         <div class="box-body">
 
-                            <form method="post" action="{{route('blog.store')}}">
+                            <form method="post" action="{{route('blog.store')}}" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="box-body">
 
@@ -55,6 +55,12 @@
                                                 <option name="category_id" value="{{$cat->id}}">{{$cat->title}}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+
+                                    <div class="form-group {{$errors->has('image') ? 'has-error' : ''}}">
+                                        <label for="image">Imagem Destaque</label>
+                                        <input type="file"  value="{{old('published_at')}}" name="image" class="form-control" id="image" placeholder="Imagem">
+
                                     </div>
                                 </div>
                                 <!-- /.box-body -->

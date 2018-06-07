@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Category;
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,12 +12,16 @@ class BlogController extends BackendController
 {
 
     protected $limit = 7;
+    protected $uploadPath;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->uploadPath = public_path('img');
+    }
+
+
     public function index()
     {
         $posts = Post::with('category', 'author')
@@ -45,19 +50,25 @@ class BlogController extends BackendController
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Post $post )
+    public function store(PostRequest $request)
     {
-        $this->validate($request, [
-            'title' => 'required',
-            'slug' => 'required|unique:posts',
-            'body' => 'required',
-            'published_at' => 'date_format:Y-m-d H:i:s',
-            'category_id' => 'required',
-        ]);
+        $data = $this->handleRequest($request);
 
-        $request->user()->posts()->create($request->all());
-
+        $request->user()->posts()->create($data);
         return redirect('/backend/blog')->with('message','Post Criado com sucesso');
+    }
+
+    public function handleRequest($request){
+        $data = $request->all();
+        if($request->hasFile('image'))
+        {
+            $image = $request->file('image');
+            $fileName = $image->getClientOriginalName();
+            $destination = $this->uploadPath;
+            $image->move($destination,$fileName);
+            $data['image'] = $fileName;
+        }
+        return $data;
     }
 
     /**
