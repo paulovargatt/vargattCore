@@ -23,6 +23,13 @@
                             </div>
                         </div>
                         <div class="box-body">
+                            @if(session('message'))
+                                <div class="alert alert-success">
+                                    {{session('message')}}
+                                </div>
+                                @endif
+
+
                             @if(!$posts->count())
                             <div class="alert alert-danger">
                                 Sem dados no momento

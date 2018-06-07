@@ -9,7 +9,7 @@ class Post extends Model
 {
 
     protected $dates = ['published_at'];
-    protected $fillable = ['view_count'];
+    protected $fillable = ['title','slug','resume','body','category_id','published_at','view_count'];
 
     public function author(){
         return $this->belongsTo(User::class);

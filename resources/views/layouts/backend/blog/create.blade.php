@@ -18,37 +18,41 @@
                     <div class="box">
                         <div class="box-body">
 
-                            <form role="form" method="post" href="{{route('blog.store')}}">
+                            <form method="post" action="{{route('blog.store')}}">
+                                {{ csrf_field() }}
                                 <div class="box-body">
-                                    <div class="form-group">
+
+                                    <div class="form-group {{$errors->has('title') ? 'has-error' : ''}} ">
                                         <label for="exampleInputEmail1">Titulo</label>
-                                        <input type="text" class="form-control" id="title" placeholder="Titulo">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Url</label>
-                                        <input type="tel" class="form-control" id="slug" placeholder="Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Resumo</label>
-                                        <textarea class="form-control" rows="2" id="resume"
-                                                  placeholder="Resumo"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputPassword1">Post</label>
-                                        <textarea class="form-control" id="body" placeholder="Resumo"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Publicar</label>
-                                        <input type="text" class="form-control" id="published_at"
-                                               placeholder="Publicar">
+                                        <input type="text" class="form-control" value="{{old('title')}}" name="title" id="title" placeholder="Titulo">
+                                        @if($errors->has('title'))
+                                            <span class="help-block">{{$errors->first('title')}}</span>
+                                        @endif
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group {{$errors->has('slug') ? 'has-error' : ''}}">
+                                        <label for="slug">Url</label>
+                                        <input type="text" value="{{old('slug')}}" name="slug" class="form-control" id="slug" placeholder="Url">
+                                    </div>
+
+                                    <div class="form-group {{$errors->has('resume') ? 'has-error' : ''}}">
+                                        <label for="resume">Resumo</label>
+                                        <textarea class="form-control" rows="2" id="resume" name="resume" placeholder="Resumo">{{old('resume')}}</textarea>
+                                    </div>
+                                    <div class="form-group {{$errors->has('body') ? 'has-error' : ''}}">
+                                        <label for="body">Post</label>
+                                        <textarea class="form-control" id="body" name="body" placeholder="Resumo">{{old('body')}}</textarea>
+                                    </div>
+                                    <div class="form-group {{$errors->has('published_at') ? 'has-error' : ''}}">
+                                        <label for="published_at">Publicar</label>
+                                        <input type="text" value="{{old('published_at')}}" name="published_at" class="form-control" id="published_at" placeholder="Y-m-d H:i:s">
+                                    </div>
+
+                                    <div class="form-group {{$errors->has('category_id') ? 'has-error' : ''}}">
                                         <label for="exampleInputEmail1">Categoria</label>
-                                        <select class="form-control">
-                                            <?php $cats = App\Category::all('title','id');  ?>
+                                        <select class="form-control" name="category_id">
                                             @foreach($cats as $cat)
-                                                    <option value="{{$cat->id}}">{{$cat->title}}</option>
+                                                <option name="category_id" value="{{$cat->id}}">{{$cat->title}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -56,7 +60,7 @@
                                 <!-- /.box-body -->
 
                                 <div class="box-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-success">Salvar</button>
                                 </div>
                             </form>
 
