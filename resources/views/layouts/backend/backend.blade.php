@@ -18,7 +18,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="hold-transition skin-black sidebar-mini">
+<body class="hold-transition skin-vargatt sidebar-mini">
 <div class="wrapper">
 
     @include('layouts.backend.navbar')
@@ -43,6 +43,6 @@
 <!-- AdminLTE App -->
 <script src="/back-end/js/app.min.js"></script>
 @yield('script')
-
+<script src="//use.edgefonts.net/aclonica.js"></script>
 </body>
 </html>

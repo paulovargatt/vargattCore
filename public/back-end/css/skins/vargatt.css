@@ -1,26 +1,148 @@
-.skin-black .main-header .navbar{
-    background-color: #222d32;
+/**
+Purple Style
+ */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+.skin-vargatt .content-wrapper {
+    background-color: #F5F7FA !important;
+}
+body,h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
+    font-family: 'Open Sans',Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-.skin-black .main-header>.logo {
-    background-color: #191616;
-    color: #fff;
+.skin-vargatt .btn-primary {
+    background-color: #5d9cec !important;
+    border: 1px solid #5d9cec !important;
 }
 
-.skin-black .main-header>.logo:hover {
-    background-color: #060a19;
-    color: #fff;
+.skin-vargatt .main-header {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    background: #7e57c2;
+    color: #fff !important;
 }
 
-.dropdown-toggle{
+.skin-vargatt .main-header a.logo{background: #7e57c2;}
+.skin-vargatt .main-header a.logo:focus,.main-header a.logo:active{background: #7e57c2!important;}
+
+.skin-vargatt .bg-green, .callout.callout-success, .alert-success, .label-success, .modal-success .modal-body{
+    background-color: #82c36b !important;
+    border: 1px solid #81c868 !important;
+}
+.skin-vargatt .bg-yellow, .callout.callout-warning, .alert-warning, .label-warning, .modal-warning .modal-body{
+    background-color: #ffbd4a !important;
+    border: 1px solid #ffbd4a !important;
+}
+.skin-vargatt .btn-danger{
+    background-color: #f05050 !important;
+    border: 1px solid #f05050 !important;
+}
+
+.skin-vargatt .btn-default{
+    background-color: #7e57c2 !important;
+    border: 1px solid #7e57c2 !important;
     color: #fff!important;
 }
 
-.navbar-custom-menu:hover{
-    background: black!important;
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover, .nav .open>a:active {
+    background: #7e57c2 !important;
+    border-color: #fff;
+}
+.skin-vargatt .sidebar-menu a:hover, a:active, a:focus {
+    color: #fff !important;
+    background: #7e57c2 !important;
 }
 
-.skin-black .main-header .navbar .nav>li>a:hover, .skin-black .main-header .navbar .nav>li>a:active, .skin-black .main-header .navbar .nav>li>a:focus, .skin-black .main-header .navbar .nav .open>a, .skin-black .main-header .navbar .nav .open>a:hover, .skin-black .main-header .navbar .nav .open>a:focus, .skin-black .main-header .navbar .nav>.active>a{
-    background: black!important;
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #7e57c2 !important;
+    border: 1px solid #7e57c2 !important;
+    color: #fff;
+    margin: -2px 5px;
+    padding: 6px 12px;
+    border-radius: 50%;
+}
+.pagination>li>a {
+    background: #ffffff;
+    color: #7e57c2;
+    margin: 0px 5px;
+    font-weight: 600;
+}
 
+.box{
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.02);
+}
+
+.content-header>.breadcrumb>li>a{
+    font-size: 1.2em;
+    color: #848484;
+}
+.content-header>.breadcrumb>.active>a{
+    color: #7e57c2!important;
+}
+
+.skin-vargatt .main-sidebar {
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.02);
+}
+
+.skin-vargatt .main-header .logo .logo-lg {
+    display: block;
+    color: #fff;
+    font-family: aclonica, sans-serif;
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+.skin-vargatt .navbar-nav > li > a {
+    color: #fff;
+}
+.skin-vargatt .navbar-nav > li > a:active {
+    color: #fff;
+    background: #7e57c2!important;
+}
+
+.skin-vargatt .navbar-nav > li > a:hover {
+    background: transparent;
+    color: #fff3cd !important;
+}
+
+.skin-vargatt .sidebar-menu li > a {
+    color: #75798B;
+}
+
+.skin-vargatt .sidebar-menu a:hover, a:active, a:focus {
+    color: #7e57c2 !important;
+    background: #f4f8fb !important;;
+}
+
+.skin-vargatt .navbar-nav > .user-menu > .dropdown-menu > li.user-header > p {
+    color: #000;
+}
+
+.sidebar-menu span:first-child{
+    margin: 15px 15px;
+    position: relative;
+    display: block;
+    color: #98a6ad;
+    font-weight: 500;
+    font-size: 1.1em;
+    text-align: left;
+}
+
+.main-header .sidebar-toggle:active,.main-header .sidebar-toggle:focus{
+    background: #7e57c2 !important;
+}
+.main-header .sidebar-toggle{
+    color: #fff!important;
+}
+
+.table thead tr td {
+    text-align: center;
+    font-weight: 800;
+    color: #403e3e;
+}
+
+.table tbody tr td {
+    text-align: center;
+}
+
+.mini-logo{
+    color: #fff;
 }

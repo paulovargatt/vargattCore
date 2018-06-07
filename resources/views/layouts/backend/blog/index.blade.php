@@ -18,7 +18,7 @@
                         <div class="box-header">
                             <div class="pull-left">
                                 <a href="{{route('blog.create')}}" class="btn btn-primary">
-                                    Novo Post
+                                  Novo Post  <span class="fa fa-plus"></span>
                                 </a>
                             </div>
                         </div>
@@ -49,11 +49,11 @@
                                                 {!!  $post->publicationLabel()!!}
                                             </span>
                                         </td>
-                                        <td>{{$post->title}}</td>
-                                        <td>{{$post->author->name}}</td>
-                                        <td>{{$post->category->title}}</td>
-                                        <td>{{$post->created_at}}</td>
-                                        <td width="80">
+                                        <td >{{$post->title}}</td>
+                                        <td width="150">{{$post->author->name}}</td>
+                                        <td width="100">{{$post->category->title}}</td>
+                                        <td width="150">{{$post->dateFormated()}}</td>
+                                        <td width="100">
                                             <a href="{{route('blog.edit',$post->id)}}" class="btn btn-xs btn-default">
                                                 <i class="fa fa-edit"></i>
                                             </a>
