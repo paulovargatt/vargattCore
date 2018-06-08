@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="/back-end/css/AdminLTE.min.css">
     <link rel="stylesheet" href="/back-end/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="/back-end/css/skins/vargatt.css">
-    <link rel="stylesheet" href="../../plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link rel="stylesheet" href="/back-end/plugins/simplemde/simplemde.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -42,6 +43,10 @@
 <script src="/back-end/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/back-end/js/app.min.js"></script>
+<script src="/back-end/plugins/simplemde/simplemde.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/pt-br.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 @yield('script')
 <script src="//use.edgefonts.net/aclonica.js"></script>
 </body>

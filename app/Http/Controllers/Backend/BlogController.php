@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Backend;
 use App\Category;
 use App\Http\Requests\PostRequest;
 use App\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class BlogController extends BackendController
 {
@@ -18,7 +20,7 @@ class BlogController extends BackendController
     public function __construct()
     {
         parent::__construct();
-        $this->uploadPath = public_path('img');
+        $this->uploadPath = public_path(config('cms.image.directory'));
     }
 
 
@@ -54,18 +56,36 @@ class BlogController extends BackendController
     {
         $data = $this->handleRequest($request);
 
+        //dd($request->all('published_at'));
+
         $request->user()->posts()->create($data);
         return redirect('/backend/blog')->with('message','Post Criado com sucesso');
     }
 
     public function handleRequest($request){
+
         $data = $request->all();
+        $data['published_at'] = Carbon::createFromFormat('d/m/Y H:i', $data['published_at']);
+        
         if($request->hasFile('image'))
         {
             $image = $request->file('image');
             $fileName = $image->getClientOriginalName();
             $destination = $this->uploadPath;
-            $image->move($destination,$fileName);
+
+            $successUpload = $image->move($destination,$fileName);
+            if($successUpload){
+                $width = config('cms.image.thumbnail.width');
+                $height = config('cms.image.thumbnail.height');
+
+                $extension = $image->getClientOriginalExtension();
+                $thumbnail = str_replace(".{$extension}","_thumb.{$extension}",$fileName);
+
+                Image::make($destination.'/'.$fileName)
+                    ->resize($width,$height)
+                    ->save($destination.'/'.$thumbnail);
+            }
+
             $data['image'] = $fileName;
         }
         return $data;
