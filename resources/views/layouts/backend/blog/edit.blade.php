@@ -1,21 +1,22 @@
 @extends('layouts.backend.backend')
-@section('title','Criar Post - Dashboard')
+@section('title','Editar Post - Dashboard')
 @section('content')
     <div class="content-wrapper">
         <section class="content-header">
-            <h1>Novo Post</h1>
+            <h1>Editar Post</h1>
             <ol class="breadcrumb">
                 <li><a href="{{url('/home')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
                 <li><a href="{{route('blog.index')}}"><i class="fa fa-bookmark-o"></i> Posts</a></li>
-                <li class="active"><a href="{{route('blog.index')}}"><i class="fa fa-file-text"></i>Novo Post</a></li>
+                <li class="active"><a href="{{route('blog.index')}}"><i class="fa fa-file-text"></i>Editar Post</a></li>
             </ol>
         </section>
 
         <!-- Main content -->
         <section class="content">
             <div class="row">
-                <form method="post" action="{{route('blog.store')}}" enctype="multipart/form-data" id="post=form">
-                    @include('layouts.backend.blog.form')
+                <!-- O Form só envia POST (PUT Esta definido no formEdit) -->
+                <form method="post" action="{{route('blog.update',$post->id)}}" enctype="multipart/form-data" id="post=form">
+                    @include('layouts.backend.blog.formEdit')
                 </form>
             </div>
 

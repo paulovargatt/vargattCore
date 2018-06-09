@@ -18,31 +18,27 @@
                         <div class="box-header">
                             <div class="pull-left">
                                 <a href="{{route('blog.create')}}" class="btn btn-primary">
-                                  Novo Post  <span class="fa fa-plus"></span>
+                                    Novo Post <span class="fa fa-plus"></span>
                                 </a>
                             </div>
                         </div>
                         <div class="box-body">
-                            @if(session('message'))
-                                <div class="alert alert-success">
-                                    {{session('message')}}
-                                </div>
-                                @endif
 
+                            @include('layouts.backend.blog.message')
 
                             @if(!$posts->count())
-                            <div class="alert alert-danger">
-                                Sem dados no momento
-                            </div>
+                                <div class="alert alert-danger">
+                                    Sem dados no momento
+                                </div>
                             @endif
                             <table class="table table-active">
                                 <thead>
                                 <tr>
-                                    <td></td>
+                                    <td>Publicação</td>
                                     <td>Titulo</td>
                                     <td>Autor</td>
                                     <td>Categoria</td>
-                                    <td>Data</td>
+                                    <td>Criado</td>
                                     <td>Ações</td>
 
                                 </tr>
@@ -51,22 +47,26 @@
                                 @foreach($posts as $post)
                                     <tr>
                                         <td width="150">
-                                            <span title="{{$post->dateFormated(true)}}"> {{$post->dateFormated(true)}}
+                                            <span title="">
+                                                {{$post->published_at != null ? $post->published_at->format('d/m/Y H:m') : 'A Definir'}}
                                                 <br>
                                                 {!!  $post->publicationLabel()!!}
                                             </span>
                                         </td>
-                                        <td >{{$post->title}}</td>
+                                        <td title="{{$post->title}}">{{str_limit($post->title,'50')}}</td>
                                         <td width="150">{{$post->author->name}}</td>
                                         <td width="100">{{$post->category->title}}</td>
-                                        <td width="150">{{$post->dateFormated()}}</td>
+                                        <td width="150">{{$post->created_at->format('d/m/y H:m')}}</td>
                                         <td width="100">
+                                            <form method="post" action="{{route('blog.destroy',$post->id)}}">
                                             <a href="{{route('blog.edit',$post->id)}}" class="btn btn-xs btn-default">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="#" class="btn btn-xs btn-danger">
-                                                <i class="fa fa-times"></i>
-                                            </a>
+                                                {{csrf_field()}} {{method_field('DELETE')}}
+                                                <button type="submit" class="btn btn-xs btn-danger">
+                                                    <i class="fa fa-times"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

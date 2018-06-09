@@ -65,8 +65,9 @@ class BlogController extends BackendController
     public function handleRequest($request){
 
         $data = $request->all();
-        $data['published_at'] = Carbon::createFromFormat('d/m/Y H:i', $data['published_at']);
-        
+        if($data['published_at']){
+            $data['published_at'] = Carbon::createFromFormat('d/m/Y H:i', $data['published_at']);
+        }
         if($request->hasFile('image'))
         {
             $image = $request->file('image');
@@ -110,7 +111,10 @@ class BlogController extends BackendController
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $cats = Category::all('title', 'id');
+
+        return view('layouts.backend.blog.edit',compact('post','cats'));
     }
 
     /**
@@ -120,9 +124,13 @@ class BlogController extends BackendController
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        //
+      $post = Post::findOrFail($id);
+      $data = $this->handleRequest($request);
+      $post->update($data);
+        return redirect('/backend/blog')->with('message','Post Atualizado com sucesso');
+
     }
 
     /**
@@ -133,6 +141,8 @@ class BlogController extends BackendController
      */
     public function destroy($id)
     {
-        //
+       $post = Post::findOrFail($id)->delete();
+        return redirect('/backend/blog')->with('trash-message',[' Post Movido para a lixeira', $id]);
+
     }
 }
