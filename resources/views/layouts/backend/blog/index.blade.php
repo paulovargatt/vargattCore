@@ -23,7 +23,10 @@
                             </div>
                             <div class="pull-right">
                                 <a href="?status=all">Todos</a> /
-                                <a href="?status=trash">Excluidos</a>
+                                <a href="?status=trash">Excluidos</a> /
+                                <a href="?status=published">Publicado</a> /
+                                <a href="?status=schedule">Agendado</a> /
+                                <a href="?status=draft">Rascunho</a>
                             </div>
                         </div>
                         <div class="box-body">
@@ -44,7 +47,7 @@
 
                         <div class="box-footer clearfix">
                             <div class="pull-left">
-                                {{$posts->links()}}
+                                {{$posts->appends(Request::query())->links()}}
                             </div>
                             <div class="pull-right">
                                 <small>{{$postCount}} {{str_plural('Item',$postCount)}}</small>

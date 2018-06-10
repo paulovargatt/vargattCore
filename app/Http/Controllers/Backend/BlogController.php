@@ -27,24 +27,42 @@ class BlogController extends BackendController
     public function index(Request $request)
     {
         $status = $request->get('status');
-       // dd($status);
-        if($status && $status == 'trash')
-        {
+        $onlyTrashed = false;
+
+        if ($status && $status == 'trash') {
             $posts = Post::onlyTrashed()->with('category', 'author')
                 ->latest()
                 ->paginate($this->limit);
             $postCount = Post::onlyTrashed()->count();
             $onlyTrashed = true;
         }
+        elseif ($status == 'published'){
+            $posts = Post::published()->with('category', 'author')
+                ->latest()
+                ->paginate($this->limit);
+            $postCount = Post::published()->count();
+        }
+        elseif ($status == 'schedule'){
+            $posts = Post::schedule()->with('category', 'author')
+                ->latest()
+                ->paginate($this->limit);
+            $postCount = Post::schedule()->count();
+        }
+
+        elseif ($status == 'draft'){
+            $posts = Post::draft()->with('category', 'author')
+                ->latest()
+                ->paginate($this->limit);
+            $postCount = Post::draft()->count();
+        }
         else{
             $posts = Post::with('category', 'author')
                 ->latest()
                 ->paginate($this->limit);
             $postCount = Post::count();
-            $onlyTrashed = false;
         }
 
-        return view('layouts.backend.blog.index', compact('posts', 'postCount','onlyTrashed'));
+        return view('layouts.backend.blog.index', compact('posts', 'postCount', 'onlyTrashed'));
     }
 
     /**
@@ -72,32 +90,32 @@ class BlogController extends BackendController
         //dd($request->all('published_at'));
 
         $request->user()->posts()->create($data);
-        return redirect('/backend/blog')->with('message','Post Criado com sucesso');
+        return redirect('/backend/blog')->with('message', 'Post Criado com sucesso');
     }
 
-    public function handleRequest($request){
+    public function handleRequest($request)
+    {
 
         $data = $request->all();
-        if($data['published_at']){
+        if ($data['published_at']) {
             $data['published_at'] = Carbon::createFromFormat('d/m/Y H:i', $data['published_at']);
         }
-        if($request->hasFile('image'))
-        {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $fileName = $image->getClientOriginalName();
             $destination = $this->uploadPath;
 
-            $successUpload = $image->move($destination,$fileName);
-            if($successUpload){
+            $successUpload = $image->move($destination, $fileName);
+            if ($successUpload) {
                 $width = config('cms.image.thumbnail.width');
                 $height = config('cms.image.thumbnail.height');
 
                 $extension = $image->getClientOriginalExtension();
-                $thumbnail = str_replace(".{$extension}","_thumb.{$extension}",$fileName);
+                $thumbnail = str_replace(".{$extension}", "_thumb.{$extension}", $fileName);
 
-                Image::make($destination.'/'.$fileName)
-                    ->resize($width,$height)
-                    ->save($destination.'/'.$thumbnail);
+                Image::make($destination . '/' . $fileName)
+                    ->resize($width, $height)
+                    ->save($destination . '/' . $thumbnail);
             }
 
             $data['image'] = $fileName;
@@ -127,7 +145,7 @@ class BlogController extends BackendController
         $post = Post::findOrFail($id);
         $cats = Category::all('title', 'id');
 
-        return view('layouts.backend.blog.edit',compact('post','cats'));
+        return view('layouts.backend.blog.edit', compact('post', 'cats'));
     }
 
     /**
@@ -139,12 +157,18 @@ class BlogController extends BackendController
      */
     public function update(PostRequest $request, $id)
     {
-      $post = Post::findOrFail($id);
-      $data = $this->handleRequest($request);
-      $post->update($data);
-        return redirect('/backend/blog')->with('message','Post Atualizado com sucesso');
+        $post = Post::findOrFail($id);
+        $oldImage = $post->image;
+        $data = $this->handleRequest($request);
+        $post->update($data);
+
+        if ($oldImage !== $post->image) {
+            $this->removeImage($oldImage);
+        }
+        return redirect('/backend/blog')->with('message', 'Post Atualizado com sucesso');
 
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -154,8 +178,8 @@ class BlogController extends BackendController
      */
     public function destroy($id)
     {
-       $post = Post::findOrFail($id)->delete();
-        return redirect('/backend/blog')->with('trash-message',[' Post Movido para a lixeira', $id]);
+        $post = Post::findOrFail($id)->delete();
+        return redirect('/backend/blog')->with('trash-message', [' Post Movido para a lixeira', $id]);
 
     }
 
@@ -164,12 +188,31 @@ class BlogController extends BackendController
         $post = Post::withTrashed()->findOrFail($id);
         $post->restore();
 
-        return redirect('/backend/blog')->with('message',' Post Restaurado');
+        return redirect('/backend/blog')->with('message', ' Post Restaurado');
 
     }
 
-    public function forceDestroy($id){
-        Post::withTrashed()->findOrFail($id)->forceDelete();
-        return redirect('/backend/blog?status=trash')->with('message',' Post Deletado');
+    public function forceDestroy($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->forceDelete();
+
+        $this->removeImage($post->image);
+        return redirect('/backend/blog?status=trash')->with('message', ' Post Deletado');
     }
+
+
+    public function removeImage($image)
+    {
+        if (!empty($image)) {
+            $imagePath = $this->uploadPath . '/' . $image;
+            $ext = substr(strrchr($image, '.'), 1);
+            $thumbnail = str_replace(".{$ext}", "_thumb.{$ext}", $image);
+            $thumbnailPath = $this->uploadPath . '/' . $thumbnail;
+
+            if (file_exists($imagePath)) unlink($imagePath);
+            if (file_exists($thumbnailPath)) unlink($thumbnailPath);
+        }
+    }
+
 }
