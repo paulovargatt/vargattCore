@@ -24,14 +24,27 @@ class BlogController extends BackendController
     }
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with('category', 'author')
-            ->latest()
-            ->paginate($this->limit);
+        $status = $request->get('status');
+       // dd($status);
+        if($status && $status == 'trash')
+        {
+            $posts = Post::onlyTrashed()->with('category', 'author')
+                ->latest()
+                ->paginate($this->limit);
+            $postCount = Post::onlyTrashed()->count();
+            $onlyTrashed = true;
+        }
+        else{
+            $posts = Post::with('category', 'author')
+                ->latest()
+                ->paginate($this->limit);
+            $postCount = Post::count();
+            $onlyTrashed = false;
+        }
 
-        $postCount = Post::count();
-        return view('layouts.backend.blog.index', compact('posts', 'postCount'));
+        return view('layouts.backend.blog.index', compact('posts', 'postCount','onlyTrashed'));
     }
 
     /**
@@ -144,5 +157,19 @@ class BlogController extends BackendController
        $post = Post::findOrFail($id)->delete();
         return redirect('/backend/blog')->with('trash-message',[' Post Movido para a lixeira', $id]);
 
+    }
+
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->findOrFail($id);
+        $post->restore();
+
+        return redirect('/backend/blog')->with('message',' Post Restaurado');
+
+    }
+
+    public function forceDestroy($id){
+        Post::withTrashed()->findOrFail($id)->forceDelete();
+        return redirect('/backend/blog?status=trash')->with('message',' Post Deletado');
     }
 }

@@ -12,6 +12,7 @@ Route::get('/autor/{author}', 'BlogController@author')->name('blog.author');
 Route::get('home', 'Backend\HomeController@index')->name('home');
 Route::resource('backend/blog','Backend\BlogController');
 Route::put('backend/blog/restore/{id}','Backend\BlogController@restore')->name('blog.restore');
+Route::delete('backend/blog/force-destroy/{id}','Backend\BlogController@forceDestroy')->name('blog.forceDestroy');
 
 
 
