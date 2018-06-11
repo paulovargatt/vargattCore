@@ -13,7 +13,6 @@ use Intervention\Image\Facades\Image;
 class BlogController extends BackendController
 {
 
-    protected $limit = 7;
     protected $uploadPath;
 
 
@@ -29,27 +28,27 @@ class BlogController extends BackendController
         $status = $request->get('status');
         $onlyTrashed = false;
 
-        if ($status && $status == 'trash') {
+        if ($status && $status == 'Deletado') {
             $posts = Post::onlyTrashed()->with('category', 'author')
                 ->latest()
                 ->paginate($this->limit);
             $postCount = Post::onlyTrashed()->count();
             $onlyTrashed = true;
         }
-        elseif ($status == 'published'){
+        elseif ($status == 'Publicado'){
             $posts = Post::published()->with('category', 'author')
                 ->latest()
                 ->paginate($this->limit);
             $postCount = Post::published()->count();
         }
-        elseif ($status == 'schedule'){
+        elseif ($status == 'Agendadado'){
             $posts = Post::schedule()->with('category', 'author')
                 ->latest()
                 ->paginate($this->limit);
             $postCount = Post::schedule()->count();
         }
 
-        elseif ($status == 'draft'){
+        elseif ($status == 'Rascunho'){
             $posts = Post::draft()->with('category', 'author')
                 ->latest()
                 ->paginate($this->limit);
@@ -62,8 +61,20 @@ class BlogController extends BackendController
             $postCount = Post::count();
         }
 
-        return view('layouts.backend.blog.index', compact('posts', 'postCount', 'onlyTrashed'));
+        $statusList = $this->statusList();
+        return view('layouts.backend.blog.index', compact('posts', 'postCount', 'onlyTrashed','statusList'));
     }
+
+    private function statusList(){
+        return [
+            'Todos ' => Post::count(),
+            'Publicado ' => Post::published()->count(),
+            'Agendadado ' => Post::schedule()->count(),
+            'Rascunho ' => Post::draft()->count(),
+            'Deletado ' => Post::onlyTrashed()->count(),
+        ];
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -188,7 +199,7 @@ class BlogController extends BackendController
         $post = Post::withTrashed()->findOrFail($id);
         $post->restore();
 
-        return redirect('/backend/blog')->with('message', ' Post Restaurado');
+        return redirect()->back()->with('message', ' Post Restaurado');
 
     }
 

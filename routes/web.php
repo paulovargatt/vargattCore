@@ -14,6 +14,8 @@ Route::resource('backend/blog','Backend\BlogController');
 Route::put('backend/blog/restore/{id}','Backend\BlogController@restore')->name('blog.restore');
 Route::delete('backend/blog/force-destroy/{id}','Backend\BlogController@forceDestroy')->name('blog.forceDestroy');
 
+/*CATS*/
+Route::resource('/backend/categories','Backend\CategoriesController');
 
 
 

@@ -12,12 +12,12 @@
     </thead>
     <tbody>
     @foreach($posts as $post)
-        <tr>
+        <tr style="    border-left: 1px solid red;">
             <td width="190">
                 <span title="">
-                    {{$post->published_at != null ? $post->published_at->format('d/m/Y H:m') : 'A Definir'}}
+                    {{--{{$post->published_at != null ? $post->published_at->format('d/m/Y H:m') : 'A Definir'}}--}}
                     <br>
-                    {!!  $post->publicationLabel()!!}
+                    {{--{!!  $post->publicationLabel()!!}--}}
                 </span>
             </td>
             <td title="{{$post->title}}">{{str_limit($post->title,'50')}}</td>

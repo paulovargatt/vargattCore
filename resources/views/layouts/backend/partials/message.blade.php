@@ -2,6 +2,10 @@
     <div class="alert alert-success">
         {{session('message')}}
     </div>
+    @elseif(session('error-message'))
+    <div class="alert alert-danger">
+        {{session('error-message')}}
+    </div>
     @elseif(session('trash-message'))
     <div class="alert alert-info d-md-inline-block" style=" display: flex">
         <?php list($message, $postId) = session('trash-message') ?>
