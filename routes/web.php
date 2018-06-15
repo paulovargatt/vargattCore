@@ -18,6 +18,12 @@ Route::delete('backend/blog/force-destroy/{id}','Backend\BlogController@forceDes
 Route::resource('/backend/categories','Backend\CategoriesController');
 
 
+Route::resource('/backend/users','Backend\UsersController');
+
+Route::get('/backend/users/confirm/{user}','Backend\UsersController@confirm')->name('backend.users.confirm');
+
+
+
 
 
 /* AUTH ROUTES */

@@ -8,5 +8,6 @@ return [
         ]
     ],
 
-    'default_category_id' => 64
+    'default_category_id' => 64,
+    'default_user_id' => 1,
 ];
