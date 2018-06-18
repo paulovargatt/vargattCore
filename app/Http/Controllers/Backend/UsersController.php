@@ -48,7 +48,10 @@ class UsersController extends BackendController
     {
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
-        User::create($request->all());
+        $user = User::create($request->all());
+        $user->attachRole($request->role);
+
+
         return redirect('/backend/users')->with('message', "Usuário criado com sucesso");
     }
 
@@ -86,8 +89,13 @@ class UsersController extends BackendController
      */
     public function update(UserUpdateRequest $request, $id)
     {
-        User::findOrFail($id)
-        ->update( !isset($request->password) ? $request->except(['password']) : $request->all() );
+       $user = User::findOrFail($id);
+       $user->update( !isset($request->password) ? $request->except(['password']) : $request->all() );
+
+        $user->detachRole($user->role);
+        $user->attachRole($request->role);
+
+
         return redirect('/backend/users')->with('message', "Usuário Atualizado com sucesso");
     }
 

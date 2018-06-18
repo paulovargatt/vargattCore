@@ -31,8 +31,12 @@
                     <li><a href="{{route('blog.create')}}"><i class="fa fa-plus-circle"></i> Novo </a></li>
                 </ul>
             </li>
+            @if(check_user_permissions(request(), "Categories@index"))
             <li><a href="{{route('categories.index')}}"><i class="fa fa-folder"></i> <span>Categorias</span></a></li>
+            @endif
+            @if(check_user_permissions(request(), "Users@index"))
             <li><a href="{{route('users.index')}}"><i class="fa fa-users"></i> <span>Usuários</span></a></li>
+            @endif
         </ul>
     </section>
     <!-- /.sidebar -->

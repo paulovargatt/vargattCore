@@ -18,7 +18,7 @@
                         <div class="box-header">
                             <div class="pull-left">
                                 <a href="{{route('users.create')}}" class="btn btn-primary">
-                                    Nova Categoria <span class="fa fa-plus"></span>
+                                    Novo Usuário <span class="fa fa-plus"></span>
                                 </a>
                             </div>
                             <div class="pull-right">

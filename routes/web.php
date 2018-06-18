@@ -18,8 +18,8 @@ Route::delete('backend/blog/force-destroy/{id}','Backend\BlogController@forceDes
 Route::resource('/backend/categories','Backend\CategoriesController');
 
 
-Route::resource('/backend/users','Backend\UsersController');
 
+Route::resource('/backend/users','Backend\UsersController')->middleware('permission:crud-post');
 Route::get('/backend/users/confirm/{user}','Backend\UsersController@confirm')->name('backend.users.confirm');
 
 

@@ -54,6 +54,12 @@ class BlogController extends BackendController
                 ->paginate($this->limit);
             $postCount = Post::draft()->count();
         }
+        elseif ($status == 'Meus'){
+            $posts = $request->user()->posts()->with('category', 'author')
+
+                ->paginate($this->limit);
+            $postCount = $request->user()->posts()->count();
+        }
         else{
             $posts = Post::with('category', 'author')
                 ->latest()
@@ -61,12 +67,13 @@ class BlogController extends BackendController
             $postCount = Post::count();
         }
 
-        $statusList = $this->statusList();
+        $statusList = $this->statusList($request);
         return view('layouts.backend.blog.index', compact('posts', 'postCount', 'onlyTrashed','statusList'));
     }
 
-    private function statusList(){
+    private function statusList($request){
         return [
+            'Meus' => $request->user()->posts()->count(),
             'Todos ' => Post::count(),
             'Publicado ' => Post::published()->count(),
             'Agendadado ' => Post::schedule()->count(),

@@ -8,18 +8,18 @@
     </tr>
     </thead>
     <tbody>
+
     @foreach($users as $user)
+
         <tr>
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
-            <td>{{$user->role}}</td>
+            <td>{{$user->roles->first()['display_name']}}</td>
 
             <td width="100">
-
                 <a href="{{route('users.edit',$user->id)}}" class="btn btn-xs btn-default">
                     <i class="fa fa-edit"></i>
                 </a>
-
                 @if($user->id == config('cms.default_user_id'))
                     <button disabled class="btn btn-xs btn-danger disabled" onclick="return">
                         <i class="fa fa-times"></i>
