@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\ConsoleOutput;
+
 class UserTableSeeder extends Seeder
 {
     /**
@@ -33,5 +36,35 @@ class UserTableSeeder extends Seeder
 
             ],
         ]);
+       // $this->createUser();
     }
+
+
+//    private function createUser()
+//    {
+//        $output = new ConsoleOutput();
+//        $progress = new ProgressBar($output,10000);
+//        $progress->start();
+//
+//        $max = 10000;
+//        for($i=0; $i < $max; $i++):
+//            $this->createUsers($i);
+//            $progress->advance();
+//        endfor;
+//        $progress->finish();
+//        $this->command->info($max . ' demo Pacientes created');
+//    }
+//
+//    private function createUsers($index)
+//    {
+//        $faker = Faker\Factory::create();
+//
+//        return \App\User::create([
+//            'name'  =>'User '. $index,
+//            'email' => "pvargatt.$index.@gmail.com",
+//            'slug' => 'paulo-vargatt',
+//            'password' => '123456',
+//        ]);
+//    }
+
 }

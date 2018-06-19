@@ -21,6 +21,9 @@ class Post extends Model
         return $this->belongsTo(Category::class);
 
     }
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
 
     public function getImageUrlAttribute($value)
     {
@@ -111,6 +114,16 @@ class Post extends Model
                 $q->orWhere('resume','LIKE', "%{$pesquisa}%");
             });
         }
+    }
+
+    public function getTagsHtmlAttribute()
+    {
+          $anchor = [];
+        foreach($this->tags as $tag){
+            $anchor[] = '<a href="'.route('blog.tag',$tag->slug).'">'.$tag->name.'</a>';
+        }
+        return implode(", ", $anchor);
+        
     }
 
 }

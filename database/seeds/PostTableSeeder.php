@@ -3,6 +3,8 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 class PostTableSeeder extends Seeder
 {
@@ -17,9 +19,12 @@ class PostTableSeeder extends Seeder
         //Generate
     $posts = [];
     $faker = Faker\Factory::create();
-    $date = Carbon::create(2018,05,20,18,30,00);
+    $date = Carbon::create(2018,03,20,18,30,00);
 
-        for ($i = 1; $i <= 10; $i ++)
+        $output = new ConsoleOutput();
+        $progress = new ProgressBar($output,500);
+        $progress->start();
+        for ($i = 1; $i <= 500; $i ++)
         {
             $image = "Post_Image_".rand(1,5).".jpg";
             $date = $date->addDays(1);
@@ -32,12 +37,16 @@ class PostTableSeeder extends Seeder
                 'body' => $faker->paragraph(rand(10,15),true),
                 'slug' => $faker->slug(),
                 'image' => rand(0,1) == 1 ? $image : null,
+                'category_id' => rand(1,3),
                 'created_at' => $createdDate,
                 'updated_at' => $createdDate,
-                'published_at' => $i < 5 ? $publishedDate : (rand(0,1) == 0 ? null : $publishedDate->addDays(4)),
+                'published_at' => Carbon::now(),
                 'view_count' => rand(1,10)*5
             ];
+            $progress->advance();
         }
         DB::table('posts')->insert($posts);
+
+        $progress->finish();
     }
 }

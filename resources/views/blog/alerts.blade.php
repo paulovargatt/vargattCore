@@ -11,6 +11,12 @@
     </div>
 @endif
 
+@if(isset($tagName))
+    <div class="alert alert-info">
+        <p>Tag: {{$tagName}}</p>
+    </div>
+@endif
+
 @if($pesquisa = request('pesquisa'))
     <div class="alert alert-info">
         <p>Pesquisa Por: {{$pesquisa}}</p>

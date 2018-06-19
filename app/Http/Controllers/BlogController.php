@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Category;
+use App\Tag;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
-    protected $limit = 3;
+    protected $limit = 4;
 
     public function index()
     {
-        $posts = Post::with('author')
+        $posts = Post::with('author','tags','category')
             ->latestFirst()
             ->filter(request('pesquisa'))
             ->published();
@@ -30,18 +31,26 @@ class BlogController extends Controller
 
     public function category(Category $category)
     {
-        //Metodo Find Categories query in Composer Service Provider
         $categoryName = $category->title;
-
-        // \DB::enableQueryLog();
         $posts = $category->posts()
-            ->with('author')
+            ->with('author','tags')
             ->latest()
             ->published()
             ->paginate($this->limit);
 
         return view('blog.index', compact('posts', 'categoryName'));
-        // dd(\DB::getQueryLog());
+    }
+
+    public function tag(Tag $tag)
+    {
+        $tagName = $tag->title;
+        $posts = $tag->posts()
+            ->with('author','category')
+            ->latest()
+            ->published()
+            ->paginate($this->limit);
+
+        return view('blog.index', compact('posts', 'tagName'));
     }
 
 
@@ -59,7 +68,7 @@ class BlogController extends Controller
     {
         $authorName = $author->name;
         $posts = $author->posts()
-            ->with('category')
+            ->with('category','tags')
             ->latest()
             ->published()
             ->paginate($this->limit);

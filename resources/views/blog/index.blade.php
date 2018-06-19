@@ -16,7 +16,7 @@
                         @endif
                         <div class="post-item-body">
                             <div class="padding-10">
-                                <h2><a href="{{'blog/'.$post->slug}}">{{$post->title}}</a></h2>
+                                <h2><a href="{{'/blog/'.$post->slug}}">{{$post->title}}</a></h2>
                                 <p>{{$post->resume}}</p>
                             </div>
 
@@ -31,6 +31,10 @@
                                         </li>
                                         <li><i class="fa fa-folder"></i><a
                                                     href="{{route('blog.category', $post->category->title)}}"> {{$post->category->title}}</a>
+                                        </li>
+
+                                        <li><i class="fa fa-tags"></i>
+                                                {!! $post->tags_html !!}
                                         </li>
                                         <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
                                     </ul>

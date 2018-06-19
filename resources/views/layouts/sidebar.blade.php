@@ -3,7 +3,8 @@
         <div class="search-widget">
             <form action="{{route('index')}}">
                 <div class="input-group">
-                    <input type="text" class="form-control input-lg" value="{{request('pesquisa')}}" name="pesquisa" placeholder="Procure Por">
+                    <input type="text" class="form-control input-lg" value="{{request('pesquisa')}}" name="pesquisa"
+                           placeholder="Procure Por">
                     <span class="input-group-btn">
                             <button class="btn btn-lg btn-default" type="submit">
                                 <i class="fa fa-search"></i>
@@ -63,14 +64,9 @@
             </div>
             <div class="widget-body">
                 <ul class="tags">
-                    <li><a href="#">PHP</a></li>
-                    <li><a href="#">Codeigniter</a></li>
-                    <li><a href="#">Yii</a></li>
-                    <li><a href="#">Laravel</a></li>
-                    <li><a href="#">Ruby on Rails</a></li>
-                    <li><a href="#">jQuery</a></li>
-                    <li><a href="#">Vue Js</a></li>
-                    <li><a href="#">React Js</a></li>
+                    @foreach($tags as $tag)
+                        <li><a href="{{route('blog.tag',$tag->slug)}}">{{$tag->name}}</a></li>
+                    @endforeach
                 </ul>
             </div>
         </div>
