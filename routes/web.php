@@ -10,6 +10,11 @@ Route::get('/autor/{author}', 'BlogController@author')->name('blog.author');
 
 /*Painel*/
 Route::get('home', 'Backend\HomeController@index')->name('home');
+Route::get('/edit-account', 'Backend\HomeController@edit')->name('editAccount');
+Route::put('/edit-account', 'Backend\HomeController@update')->name('editAccountUpdate');
+
+
+
 Route::resource('backend/blog','Backend\BlogController');
 Route::put('backend/blog/restore/{id}','Backend\BlogController@restore')->name('blog.restore');
 Route::delete('backend/blog/force-destroy/{id}','Backend\BlogController@forceDestroy')->name('blog.forceDestroy');

@@ -1,14 +1,16 @@
 <div class="col-md-4">
     <aside class="right-sidebar">
         <div class="search-widget">
-            <div class="input-group">
-                <input type="text" class="form-control input-lg" placeholder="Search for...">
-                <span class="input-group-btn">
-                            <button class="btn btn-lg btn-default" type="button">
+            <form action="{{route('index')}}">
+                <div class="input-group">
+                    <input type="text" class="form-control input-lg" value="{{request('pesquisa')}}" name="pesquisa" placeholder="Procure Por">
+                    <span class="input-group-btn">
+                            <button class="btn btn-lg btn-default" type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
                           </span>
-            </div><!-- /input-group -->
+                </div>
+            </form>
         </div>
 
         <div class="widget">
@@ -18,10 +20,11 @@
             <div class="widget-body">
                 <ul class="categories">
                     @foreach($categories as $categorie)
-                    <li>
-                        <a href="{{route('blog.category',$categorie->slug)}}"><i class="fa fa-angle-right"></i> {{$categorie->title}}</a>
-                        <span class="badge pull-right">{{$categorie->posts->count()}}</span>
-                    </li>
+                        <li>
+                            <a href="{{route('blog.category',$categorie->slug)}}"><i
+                                        class="fa fa-angle-right"></i> {{$categorie->title}}</a>
+                            <span class="badge pull-right">{{$categorie->posts->count()}}</span>
+                        </li>
                     @endforeach
                 </ul>
             </div>
@@ -34,22 +37,22 @@
             <div class="widget-body">
                 <ul class="popular-posts">
                     @foreach($popularPosts as $posts)
-                    <li>
-                        @if($posts->image_thumb_url)
-                        <div class="post-image">
-                            <a href="{{route('blog.show',$posts->slug)}}">
-                                <img src="{{$posts->image_thumb_url}}" />
-                            </a>
-                        </div>
-                        @endif
-                        <div class="post-body">
-                            <h6><a href="{{route('blog.show',$posts->slug)}}">{{$posts->title}}</a></h6>
-                            <div class="post-meta">
-                                <span>{{$posts->date}}</span>
+                        <li>
+                            @if($posts->image_thumb_url)
+                                <div class="post-image">
+                                    <a href="{{route('blog.show',$posts->slug)}}">
+                                        <img src="{{$posts->image_thumb_url}}"/>
+                                    </a>
+                                </div>
+                            @endif
+                            <div class="post-body">
+                                <h6><a href="{{route('blog.show',$posts->slug)}}">{{$posts->title}}</a></h6>
+                                <div class="post-meta">
+                                    <span>{{$posts->date}}</span>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                        @endforeach
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>

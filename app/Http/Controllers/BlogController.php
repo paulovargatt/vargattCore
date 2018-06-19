@@ -17,8 +17,14 @@ class BlogController extends Controller
     {
         $posts = Post::with('author')
             ->latestFirst()
-            ->published()
-            ->Paginate($this->limit);
+            ->filter(request('pesquisa'))
+            ->published();
+
+
+
+
+        $posts = $posts->paginate($this->limit);
+
         return view('blog.index', compact('posts'));
     }
 
@@ -41,8 +47,8 @@ class BlogController extends Controller
 
     public function show(Post $post)
     {
-        //$viewCount = $post->view_count + 1;
-        //$post->update(['view_count' => $viewCount]);
+//        $viewCount = $post->view_count + 1;
+//        $post->update(['view_count' => $viewCount]);
 
         $post->increment('view_count');
         return view('blog.show', compact('post'));

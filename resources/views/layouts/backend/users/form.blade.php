@@ -26,6 +26,23 @@
                     @endif
                 </div>
 
+                <div class="form-group {{$errors->has('slug') ? 'has-error' : ''}}">
+                    <label for="slug">Slug</label>
+                    <input type="text" value="{{old('slug',$user->exists ? $user->slug : '')}}" name="slug"
+                           class="form-control" id="slug" placeholder="Slug">
+                    @if($errors->has('slug'))
+                        <span class="help-block">{{$errors->first('slug')}}</span>
+                    @endif
+                </div>
+
+                <div class="form-group {{$errors->has('bio') ? 'has-error' : ''}}">
+                    <label for="email">bio</label>
+                    <textarea name="bio" class="form-control" id="bio">{{old('bio',$user->exists ? $user->bio : '')}}</textarea>
+                    @if($errors->has('bio'))
+                        <span class="help-block">{{$errors->first('bio')}}</span>
+                    @endif
+                </div>
+
                 <div class="form-group {{$errors->has('password') ? 'has-error' : ''}}">
                     <label for="password">Senha</label>
                     <input type="password" name="password" class="form-control" id="email" placeholder="Senha">

@@ -97,4 +97,20 @@ class Post extends Model
         return $query->whereNull("published_at");
     }
 
+    public function scopeFilter($query,$pesquisa){
+        if($pesquisa)
+        {
+            $query->where(function ($q)use($pesquisa){
+                 $q->whereHas('author', function($qr) use ($pesquisa) {
+                     $qr->where('name', 'LIKE', "%{$pesquisa}%");
+                 });
+                 $q->orWhereHas('category', function($qr) use ($pesquisa) {
+                     $qr->where('title', 'LIKE', "%{$pesquisa}%");
+                 });
+                $q->orWhere('title','LIKE', "%{$pesquisa}%");
+                $q->orWhere('resume','LIKE', "%{$pesquisa}%");
+            });
+        }
+    }
+
 }
