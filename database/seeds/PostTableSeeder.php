@@ -22,9 +22,9 @@ class PostTableSeeder extends Seeder
     $date = Carbon::create(2018,03,20,18,30,00);
 
         $output = new ConsoleOutput();
-        $progress = new ProgressBar($output,500);
+        $progress = new ProgressBar($output,30);
         $progress->start();
-        for ($i = 1; $i <= 500; $i ++)
+        for ($i = 1; $i <= 30; $i ++)
         {
             $image = "Post_Image_".rand(1,5).".jpg";
             $date = $date->addDays(1);

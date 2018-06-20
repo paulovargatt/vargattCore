@@ -22,7 +22,7 @@
                                     <li><i class="fa fa-tags"></i>
                                         {!! $post->tags_html !!}
                                     </li>
-                                    <li><i class="fa fa-comments"></i><a href="#">4 Comments</a></li>
+                                    <li><i class="fa fa-comments"></i><a href="#">{{count($post->comments())}}</a></li>
                                 </ul>
                             </div>
 
