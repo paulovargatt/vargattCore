@@ -3,7 +3,7 @@
 
     <div class="comment-body padding-10">
         <ul class="comments-list">
-            @foreach($post->comments as $comment)
+            @foreach($postComments as $comment)
             <li class="comment-item">
                 <div class="comment-heading clearfix">
                     <div class="comment-author-meta">
@@ -15,29 +15,34 @@
                  </div>
             </li>
             @endforeach
-
         </ul>
+
+        <nav>
+            {!! $postComments->links() !!}
+        </nav>
 
     </div>
 
     <div class="comment-footer padding-10">
         <h3>Leave a comment</h3>
-        <form>
-            <div class="form-group required">
+            <form method="post" action="{{route('blog.comments',$post->slug)}}">
+                {{ csrf_field() }}
+
+                <div class="form-group required">
                 <label for="name">Name</label>
-                <input type="text" name="name" id="name" class="form-control">
+                <input type="text" name="author_name" id="name" class="form-control">
             </div>
             <div class="form-group required">
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email" class="form-control">
+                <input type="text" name="author_email" id="email" class="form-control">
             </div>
             <div class="form-group">
                 <label for="website">Website</label>
-                <input type="text" name="website" id="website" class="form-control">
+                <input type="text" name="author_url" id="website" class="form-control">
             </div>
             <div class="form-group required">
                 <label for="comment">Comment</label>
-                <textarea name="comment" id="comment" rows="6" class="form-control"></textarea>
+                <textarea name="body" id="comment" rows="6" class="form-control"></textarea>
             </div>
             <div class="clearfix">
                 <div class="pull-left">

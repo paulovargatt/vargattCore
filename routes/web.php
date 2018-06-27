@@ -8,6 +8,8 @@ Route::get('/autor/{author}', 'BlogController@author')->name('blog.author');
 
 Route::get('/tag/{tag}', 'BlogController@tag')->name('blog.tag');
 
+Route::post('/blog/{post}/comments', 'CommentsController@store')->name('blog.comments');
+
 
 /*Painel*/
 Route::get('/home', 'Backend\HomeController@index')->name('home');
